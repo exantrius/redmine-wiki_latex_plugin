@@ -3,10 +3,10 @@ require 'redmine'
 RAILS_DEFAULT_LOGGER.info 'Starting wiki_latex_plugin for Redmine'
 
 Redmine::Plugin.register :wiki_latex_plugin do
-  name 'Latex Wiki-macro Plugin'
-  author 'Nils Israel'
-  description 'Render latex images'
-  version '0.0.3'
+  name 'Latex Wiki-macro Plugin for Redmine 3.x.x'
+  author 'Andrew Sednev, 2015'
+  description 'Render latex images for Redmine 3.x.x (based Latex Wiki-macro Plugin by Nils Israel 0.0.3)'
+  version '1.0.0'
 
 	Redmine::WikiFormatting::Macros.register do
 
