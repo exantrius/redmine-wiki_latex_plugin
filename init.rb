@@ -10,7 +10,7 @@ Redmine::Plugin.register :wiki_latex_plugin do
 
   Redmine::WikiFormatting::Macros.register do
 
-    macro :latex :desc => 'Latex Plugin {{latex(place inline latex code here)}} Don\'t use curly braces.' do |wiki_content_obj, args|
+    macro :latex, :desc => 'Latex Plugin {{latex(place inline latex code here)}} Don\'t use curly braces.' do |wiki_content_obj, args|
       Rails.logger.info args
       m = WikiLatexHelper::Macro.new(self, args.to_s)
       m.render
@@ -18,7 +18,7 @@ Redmine::Plugin.register :wiki_latex_plugin do
 
 
     # code borrowed from wiki template macro
-    macro :latex_include :desc => 'Include wiki page rendered with latex. {{latex_include(WikiName)}}' do |obj, args|
+    macro :latex_include, :desc => 'Include wiki page rendered with latex. {{latex_include(WikiName)}}' do |obj, args|
       page = Wiki.find_page(args.to_s, :project => @project)
       raise 'Page not found' if page.nil? || !User.current.allowed_to?(:view_wiki_pages, page.wiki.project)
 
