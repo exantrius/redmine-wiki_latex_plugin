@@ -3,31 +3,22 @@ require 'redmine'
 Rails.logger.info 'Starting wiki_latex_plugin for Redmine'
 
 Redmine::Plugin.register :wiki_latex_plugin do
-  name 'Latex Wiki-macro Plugin'
+  name 'Latex Wiki-macro Plugin for Redmine 3.x.x'
   author 'Andrew Sednev, 2015'
   description 'Render latex images for Redmine 3.x.x (based Latex Wiki-macro Plugin by Nils Israel 0.0.3)'
   version '1.0.0'
 
-	Redmine::WikiFormatting::Macros.register do
+  Redmine::WikiFormatting::Macros.register do
 
-		desc <<'EOF'
-Latex Plugin
-{{latex(place inline latex code here)}}
-
-Don't use curly braces. '
-EOF
-		macro :latex do |wiki_content_obj, args|
-			m = WikiLatexHelper::Macro.new(self, args.to_s)
-			m.render
-		end
+    macro :latex :desc => 'Latex Plugin {{latex(place inline latex code here)}} Don\'t use curly braces.' do |wiki_content_obj, args|
+      Rails.logger.info args
+      m = WikiLatexHelper::Macro.new(self, args.to_s)
+      m.render
+    end
 
 
     # code borrowed from wiki template macro
-    desc <<'EOF'
-Include wiki page rendered with latex.
-{{latex_include(WikiName)}}
-EOF
-    macro :latex_include do |obj, args|
+    macro :latex_include :desc => 'Include wiki page rendered with latex. {{latex_include(WikiName)}}' do |obj, args|
       page = Wiki.find_page(args.to_s, :project => @project)
       raise 'Page not found' if page.nil? || !User.current.allowed_to?(:view_wiki_pages, page.wiki.project)
 
