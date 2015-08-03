@@ -11,7 +11,6 @@ module WikiLatexHelper
   end
     class Macro
         def initialize(view, source)
-          Rails.logger.info 'MACRO INIT Start'
           @view = view
           @view.controller.extend(WikiLatexHelper)
             source.gsub!(/<br \/>/,"")
@@ -22,17 +21,14 @@ module WikiLatexHelper
                 @latex.save
             end
             @latex = WikiLatex.find_by_image_id(name)
-          Rails.logger.info 'MACRO INIT End'
         end
 
         def render()
-          Rails.logger.info 'MACRO RENDER Start'
           if @latex
             @view.controller.render_image_tag(@latex.image_id, @latex.source)
           else
             @view.controller.render_image_tag("error", "error")
           end
-          Rails.logger.info 'MACRO RENDER End'
         end
         def render_block(wiki_name)
           if @latex
