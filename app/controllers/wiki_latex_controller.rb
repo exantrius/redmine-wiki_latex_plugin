@@ -4,17 +4,17 @@ class WikiLatexController < ApplicationController
     @latex = WikiLatex.find_by_image_id(params[:image_id])
     @name = params[:image_id]
     if @name != "error"
-	image_file = File.join([RAILS_ROOT, 'tmp', 'wiki_latex_plugin', @name+".png"])
+      image_file = File.join([Rails.root, 'tmp', 'wiki_latex_plugin', @name+".png"])
     else
-	image_file = File.join([RAILS_ROOT, 'public', 'plugin_assets', 'wiki_latex_plugin', 'images', @name+".png"])
+      image_file = File.join([Rails.root, 'public', 'plugin_assets', 'wiki_latex_plugin', 'images', @name+".png"])
     end
     if (!File.exists?(image_file))
-    	render_image
+      render_image
     end
     if (File.exists?(image_file))
       render :file => image_file, :layout => false, :content_type => 'image/png'
     else
-    	render_404
+      render_404
     end
     rescue ActiveRecord::RecordNotFound
       render_404
@@ -22,7 +22,7 @@ class WikiLatexController < ApplicationController
 
 private
   def render_image
-    dir = File.join([RAILS_ROOT, 'tmp', 'wiki_latex_plugin'])
+    dir = File.join([Rails.root, 'tmp', 'wiki_latex_plugin'])
     begin
       Dir.mkdir(dir)
     rescue
@@ -44,10 +44,11 @@ private
 
     fork_exec(dir, "/usr/bin/latex --interaction=nonstopmode "+@name+".tex 2> /dev/null > /dev/null")
     fork_exec(dir, "/usr/bin/dvipng "+@name+".dvi -o "+@name+".png")
+
     ['tex','dvi','log','aux','ps'].each do |ext|
-	if File.exists?(basefilename+"."+ext)
-    	    File.unlink(basefilename+"."+ext)
-	end
+      if File.exists?(basefilename+"."+ext)
+        File.unlink(basefilename+"."+ext)
+      end
     end
   end
 
