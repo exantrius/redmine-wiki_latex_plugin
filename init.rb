@@ -3,7 +3,7 @@ require 'redmine'
 Rails.logger.info 'Starting wiki_latex_plugin for Redmine'
 
 Redmine::Plugin.register :wiki_latex_plugin do
-  name 'Latex Wiki-macro Plugin for Redmine 3.x.x'
+  name 'Latex Wiki-macro Plugin'
   author 'Andrew Sednev, 2015'
   description 'Render latex images for Redmine 3.x.x (based Latex Wiki-macro Plugin by Nils Israel 0.0.3)'
   version '1.0.0'
